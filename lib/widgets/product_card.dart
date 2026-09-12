@@ -8,11 +8,11 @@ class ProductCard extends StatelessWidget {
   final int quantity;
 
   const ProductCard({
-    Key? key,
+    super.key,
     required this.product,
     required this.onTap,
     this.quantity = 0,
-  }) : super(key: key);
+  });
 
   String _getBadgeLabel(BadgeType? badge) {
     switch (badge) {
@@ -69,9 +69,9 @@ class ProductCard extends StatelessWidget {
                   Container(
                     height: 120,
                     width: double.infinity,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: DreamByteTheme.blueGradient,
-                      borderRadius: const BorderRadius.only(
+                      borderRadius: BorderRadius.only(
                         bottomLeft: Radius.circular(12),
                         bottomRight: Radius.circular(12),
                       ),
