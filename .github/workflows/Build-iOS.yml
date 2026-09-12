@@ -1,0 +1,62 @@
+name: Build iOS Unsigned IPA
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-ios:
+    runs-on: macos-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+          channel: 'stable'
+
+      - name: Get Flutter version
+        run: flutter --version
+
+      - name: Get dependencies
+        run: flutter pub get
+
+      - name: Run code analysis
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build iOS release (unsigned)
+        run: flutter build ios --release --no-codesign
+
+      - name: Create Payload directory
+        run: |
+          cd build/ios/Release-iphoneos
+          mkdir -p Payload
+          cp -r Runner.app Payload/
+
+      - name: Package as IPA
+        run: |
+          cd build/ios/Release-iphoneos
+          zip -r DreamByte-Store-unsigned.ipa Payload/
+          ls -lh DreamByte-Store-unsigned.ipa
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: DreamByte-Store-iOS-Unsigned
+          path: build/ios/Release-iphoneos/DreamByte-Store-unsigned.ipa
+          retention-days: 30
+
+      - name: Create build summary
+        run: |
+          echo "✅ iOS Build Completed Successfully!"
+          echo "📦 Artifact: DreamByte-Store-unsigned.ipa"
+          echo "⚠️  This IPA is unsigned and for testing purposes only"
+          echo "📱 Download from: Actions → DreamByte-Store-iOS-Unsigned"
