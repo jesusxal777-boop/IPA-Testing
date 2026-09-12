@@ -48,7 +48,7 @@ jobs:
           ls -lh DreamByte-Store-unsigned.ipa
 
       - name: Upload IPA artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: DreamByte-Store-iOS-Unsigned
           path: build/ios/Release-iphoneos/DreamByte-Store-unsigned.ipa
