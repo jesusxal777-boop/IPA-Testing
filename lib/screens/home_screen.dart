@@ -148,16 +148,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   return Center(
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Icon(
+                      children: const [
+                        Icon(
                           Icons.search_off,
                           size: 64,
                           color: DreamByteTheme.cyanNeon,
                         ),
-                        const SizedBox(height: 16),
+                        SizedBox(height: 16),
                         Text(
                           'No se encontraron productos',
-                          style: Theme.of(context).textTheme.headlineSmall,
                         ),
                       ],
                     ),
